@@ -29,17 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} style={{ overflow: "hidden" }}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}>
         <Providers>
-          <div className="flex flex-col min-h-screen">
-            <header>
-              <Narbar />
-            </header>
-            <main className="bg-gray-100 flex-1 px-5 py-5 w-full">{children}</main>
-            <footer className="bg-gray-800 text-white py-4 text-center">
-              <p>&copy; {new Date().getFullYear()} giigle</p>
-            </footer>
-          </div>
+          <header>
+            <Narbar />
+          </header>
+          <main className="flex flex-1 overflow-hidden">{children}</main>
         </Providers>
       </body>
     </html>

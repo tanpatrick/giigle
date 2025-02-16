@@ -7,9 +7,9 @@ import { JobsResponse } from "@/types/Jobs";
 
 export function JobsList({ jobs }: { jobs: JobsResponse }) {
   return (
-    <Card>
+    <Card radius="none" className="h-[calc(100vh-4rem)] overflow-y-auto">
       <CardBody>
-        <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 12rem)" }}>
+        <div>
           <Listbox onAction={(key) => alert(key)}>
             {jobs.items.map(({ description, id, location, title }) => (
               <ListboxItem

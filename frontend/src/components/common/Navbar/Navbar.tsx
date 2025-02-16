@@ -19,7 +19,7 @@ export const Logo = () => {
 
 export function Narbar() {
   return (
-    <HeroNavbar>
+    <HeroNavbar isBordered>
       <NavbarBrand>
         <Logo />
         <p className="font-bold text-inherit">giigle</p>

@@ -1,3 +1,5 @@
+import { Coordinates } from "./Coordinate";
+
 export type Job = {
   description: string;
   id: string;
@@ -7,10 +9,7 @@ export type Job = {
 
 export type JobLocation = {
   address: string;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
+  coordinates: Coordinates;
 };
 
 export type JobsResponse = {
