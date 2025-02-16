@@ -4,19 +4,19 @@ import { devtools, persist } from "zustand/middleware";
 import { Job } from "@/types/Jobs";
 
 type JobSelectionState = {
-  job: Job | null;
-  selectedJob: (job: Job) => void;
+  selectedJob: Job | null;
+  setSelectedJob: (job: Job) => void;
 };
 
 export const useJobSelectionStore = create<JobSelectionState>()(
   devtools(
     persist(
       (set) => ({
-        job: null,
-        selectedJob: (job) => set(() => ({ job: job })),
+        selectedJob: null,
+        setSelectedJob: (selectedJob) => set(() => ({ selectedJob })),
       }),
       {
-        name: "job-storage",
+        name: "job-selection-storage",
       }
     )
   )

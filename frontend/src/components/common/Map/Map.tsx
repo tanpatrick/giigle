@@ -39,7 +39,7 @@ export function Map({ children }: { children?: React.ReactNode }) {
   }, [setInitCoordinates]);
 
   const mapRef = useMap();
-  const selectedJob = useJobSelectionStore((state) => state.job);
+  const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
 
   useEffect(() => {
     const coordinate = selectedJob?.location.coordinates;
@@ -54,7 +54,7 @@ export function Map({ children }: { children?: React.ReactNode }) {
       coordinate.longitude &&
       (currentCenter?.lat() !== coordinate.latitude || currentCenter?.lng()) !== coordinate.longitude
     ) {
-      mapRef?.setZoom(15);
+      // mapRef?.setZoom(15);
       mapRef?.panTo({
         lat: coordinate.latitude,
         lng: coordinate.longitude,
@@ -67,6 +67,7 @@ export function Map({ children }: { children?: React.ReactNode }) {
 
   return (
     <GoggleMap
+      // className="w-full"
       defaultCenter={{
         lat: initCoordinates?.latitude || 0,
         lng: initCoordinates?.longitude || 0,
@@ -74,6 +75,7 @@ export function Map({ children }: { children?: React.ReactNode }) {
       defaultZoom={11}
       disableDefaultUI={true}
       gestureHandling="greedy"
+      mapId="8d324fafd702673d"
       onBoundsChanged={(bounds) => {
         const filteredJobs = jobs.filter((job) => {
           const { latitude, longitude } = job.location.coordinates;
@@ -88,8 +90,15 @@ export function Map({ children }: { children?: React.ReactNode }) {
       style={{ height: `calc(100vh - 4rem)` }}
     >
       {children}
-      {visibleJobs.map(({ id, location }) => (
-        <MapMarker key={id} location={location.coordinates} />
+      {visibleJobs.map((job) => (
+        <MapMarker
+          isSelected={selectedJob?.id === job.id}
+          key={job.id}
+          location={job.location.coordinates}
+          onClick={() => {
+            setSelectedJob(job);
+          }}
+        />
       ))}
     </GoggleMap>
   );

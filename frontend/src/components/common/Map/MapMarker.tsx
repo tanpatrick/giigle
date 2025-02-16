@@ -1,32 +1,28 @@
-import { Marker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker } from "@vis.gl/react-google-maps";
+
+import { MarkerIcon } from "../icons/MarkerIcon";
 
 import { Coordinates } from "@/types/Coordinate";
 
 type MapMarkerProps = {
-  iconSrc?: string;
-  isVisible?: boolean;
+  isSelected?: boolean;
   location: Coordinates;
-  onMouseOver?: () => void;
+  onClick?: () => void;
 };
 
-export function MapMarker({ iconSrc, isVisible, location, onMouseOver }: MapMarkerProps) {
+export function MapMarker({ isSelected, location, onClick }: MapMarkerProps) {
   return (
-    <Marker
-      animation={google.maps.Animation.DROP}
-      icon={
-        iconSrc
-          ? {
-              scaledSize: new window.google.maps.Size(25, 25),
-              url: iconSrc,
-            }
-          : null
-      }
-      onMouseOver={onMouseOver}
+    <AdvancedMarker
+      onClick={onClick}
       position={{
         lat: location.latitude,
         lng: location.longitude,
       }}
-      visible={isVisible}
-    />
+      style={{
+        transform: `scale(${isSelected ? "1.3" : "1"})`,
+      }}
+    >
+      <MarkerIcon isSelected={isSelected} />
+    </AdvancedMarker>
   );
 }
