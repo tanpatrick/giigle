@@ -5,7 +5,7 @@ import { navbarItems } from "./navbarItems";
 
 export const Logo = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="48" height="48" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="58" height="58" fill="none">
       {/* Location Pin */}
       <circle cx="50" cy="50" r="30" fill="#FF6347" />
       {/* Magnifying Glass */}
