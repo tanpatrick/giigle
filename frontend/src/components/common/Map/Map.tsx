@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { Map as GoggleMap, useMap } from "@vis.gl/react-google-maps";
 
-import { MapMarker } from "./MapMarker";
-
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useJobsStore } from "@/stores/jobs/useJobsStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
 import { Coordinates } from "@/types/Coordinate";
+
+import { MapMarker } from "./MapMarker";
 
 const mapStyles = [
   {

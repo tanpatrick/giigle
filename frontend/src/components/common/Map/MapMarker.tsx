@@ -1,8 +1,8 @@
 import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
-import { MarkerIcon } from "../icons/MarkerIcon";
-
 import { Coordinates } from "@/types/Coordinate";
+
+import { MarkerIcon } from "../icons/MarkerIcon";
 
 type MapMarkerProps = {
   isSelected?: boolean;
