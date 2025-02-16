@@ -5,7 +5,7 @@ import { Providers } from "./providers";
 
 import "./globals.css";
 
-import { Narbar } from "@/components/Navbar";
+import { Narbar } from "@/components/common/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
