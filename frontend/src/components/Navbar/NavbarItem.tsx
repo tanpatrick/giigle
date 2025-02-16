@@ -1,7 +1,7 @@
 "use client";
 
-import { NavbarItem as HeroNavbarItem } from "@heroui/navbar";
 import { Link } from "@heroui/link";
+import { NavbarItem as HeroNavbarItem } from "@heroui/navbar";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 

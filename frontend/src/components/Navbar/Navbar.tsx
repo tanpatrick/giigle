@@ -1,4 +1,5 @@
 import { Navbar as HeroNavbar, NavbarBrand, NavbarContent } from "@heroui/navbar";
+
 import { NavbarItem } from "./NavbarItem";
 import { navbarItems } from "./navbarItems";
 
