@@ -1,7 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Map as GoggleMap } from "@vis.gl/react-google-maps";
 
+import { useEffect, useState } from "react";
+import { Map as GoggleMap, useMap } from "@vis.gl/react-google-maps";
+
+import { MapMarker } from "./MapMarker";
+
+import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
+import { useJobsStore } from "@/stores/jobs/useJobsStore";
+import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
 import { Coordinates } from "@/types/Coordinate";
 
 const mapStyles = [
@@ -32,6 +38,33 @@ export function Map({ children }: { children?: React.ReactNode }) {
     }
   }, [setInitCoordinates]);
 
+  const mapRef = useMap();
+  const selectedJob = useJobSelectionStore((state) => state.job);
+
+  useEffect(() => {
+    const coordinate = selectedJob?.location.coordinates;
+    const currentCenter = mapRef?.getCenter();
+
+    if (!coordinate) {
+      return;
+    }
+
+    if (
+      coordinate.latitude &&
+      coordinate.longitude &&
+      (currentCenter?.lat() !== coordinate.latitude || currentCenter?.lng()) !== coordinate.longitude
+    ) {
+      mapRef?.setZoom(15);
+      mapRef?.panTo({
+        lat: coordinate.latitude,
+        lng: coordinate.longitude,
+      });
+    }
+  }, [mapRef, selectedJob]);
+
+  const { jobs } = useJobsStore((state) => state);
+  const { visibleJobs, setVisibleJobs } = useVisibleJobsStore();
+
   return (
     <GoggleMap
       defaultCenter={{
@@ -41,13 +74,23 @@ export function Map({ children }: { children?: React.ReactNode }) {
       defaultZoom={11}
       disableDefaultUI={true}
       gestureHandling="greedy"
-      // onTilesLoaded={() => setIsTilesLoaded(true)}
-      // onZoomChanged={({ map }) => setZoom(map.getZoom())}
-      className="h-[calc(100vh-4rem)]"
-      styles={mapStyles}
+      onBoundsChanged={(bounds) => {
+        const filteredJobs = jobs.filter((job) => {
+          const { latitude, longitude } = job.location.coordinates;
+          const position = new google.maps.LatLng(latitude, longitude);
+          return bounds.map.getBounds()?.contains(position);
+        });
+
+        setVisibleJobs(filteredJobs);
+      }}
       reuseMaps
+      styles={mapStyles}
+      style={{ height: `calc(100vh - 4rem)` }}
     >
       {children}
+      {visibleJobs.map(({ id, location }) => (
+        <MapMarker key={id} location={location.coordinates} />
+      ))}
     </GoggleMap>
   );
 }

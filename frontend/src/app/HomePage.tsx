@@ -7,14 +7,10 @@ export async function HomePage() {
   const jobs: JobsResponse = await data.json();
 
   return (
-    <div className="h-[calc(100vh-4rem)]">
-      <div className="grid grid-cols-1 md:grid-cols-12">
-        <div className="col-span-1 md:col-span-4">
-          <JobsList jobs={jobs} />
-        </div>
-        <div className="col-span-1 md:col-span-8">
-          <Map />
-        </div>
+    <div className="w-full" style={{ height: `calc(100vh - 4rem)` }}>
+      <div className="grid grid-cols-1 md:grid-cols-[30%,70%]">
+        <JobsList jobs={jobs.items} />
+        <Map />
       </div>
     </div>
   );

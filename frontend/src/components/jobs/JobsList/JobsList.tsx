@@ -1,29 +1,46 @@
 "use client";
 
+import { useEffect } from "react";
 import { Card, CardBody } from "@heroui/card";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 
-import { JobsResponse } from "@/types/Jobs";
+import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
+import { useJobsStore } from "@/stores/jobs/useJobsStore";
+import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
+import { Job } from "@/types/Jobs";
 
-export function JobsList({ jobs }: { jobs: JobsResponse }) {
+export function JobsList({ jobs }: { jobs: Job[] }) {
+  const { setJobs } = useJobsStore();
+
+  const setSelectedJob = useJobSelectionStore((state) => state.selectedJob);
+
+  useEffect(() => {
+    setJobs(jobs);
+  }, [jobs, setJobs]);
+
+  const { visibleJobs } = useVisibleJobsStore();
+
   return (
-    <Card radius="none" className="h-[calc(100vh-4rem)] overflow-y-auto">
+    <Card radius="none">
       <CardBody>
-        <div>
-          <Listbox onAction={(key) => alert(key)}>
-            {jobs.items.map(({ description, id, location, title }) => (
+        <div className="overflow-y-auto" style={{ height: `calc(100vh - 5rem)` }}>
+          <Listbox items={visibleJobs}>
+            {(job) => (
               <ListboxItem
                 description={
                   <div>
-                    <div>{description}</div>
-                    <div className="text-right">{location.address}</div>
+                    <div>{job.description}</div>
+                    <div className="text-right">{job.location.address}</div>
                   </div>
                 }
-                key={id}
+                key={job.id}
+                onPress={() => {
+                  setSelectedJob(job);
+                }}
               >
-                {title}
+                {job.title}
               </ListboxItem>
-            ))}
+            )}
           </Listbox>
         </div>
       </CardBody>
