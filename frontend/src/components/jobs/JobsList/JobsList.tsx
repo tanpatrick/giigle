@@ -13,6 +13,8 @@ import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
 import { useMapStore } from "@/stores/useMapStore";
 import { Job } from "@/types/Jobs";
 
+import { JobTitle } from "./JobTitle";
+
 export function JobsList({ jobs }: { jobs: Job[] }) {
   const { setJobs } = useJobsStore();
 
@@ -63,7 +65,7 @@ export function JobsList({ jobs }: { jobs: Job[] }) {
                   }}
                   startContent={<MarkerIcon />}
                 >
-                  <span className={isSelected ? "font-bold text-black" : ""}>{job.title}</span>
+                  <JobTitle isSelected={isSelected} title={job.title} />
                 </ListboxItem>
               );
             })}
