@@ -5,7 +5,7 @@ import { Job } from "@/types/Jobs";
 
 type JobSelectionState = {
   selectedJob: Job | null;
-  setSelectedJob: (job: Job) => void;
+  setSelectedJob: (job: Job | null) => void;
 };
 
 export const useJobSelectionStore = create<JobSelectionState>()(

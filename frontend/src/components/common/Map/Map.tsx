@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Map as GoggleMap, useMap } from "@vis.gl/react-google-maps";
 
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useJobsStore } from "@/stores/jobs/useJobsStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
-import { Coordinates } from "@/types/Coordinate";
+import { useMapStore } from "@/stores/useMapStore";
 
 import { MapMarker } from "./MapMarker";
 
@@ -24,55 +24,37 @@ const mapStyles = [
 ];
 
 export function Map({ children }: { children?: React.ReactNode }) {
-  const [initCoordinates, setInitCoordinates] = useState<Coordinates>({
-    latitude: -36.8678925,
-    longitude: 174.5918893,
-  });
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        setInitCoordinates({ latitude, longitude });
-      });
-    }
-  }, [setInitCoordinates]);
-
   const mapRef = useMap();
+
   const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
+  const { coordinates, setCoordinates, setZoom, zoom } = useMapStore();
 
   useEffect(() => {
-    const coordinate = selectedJob?.location.coordinates;
     const currentCenter = mapRef?.getCenter();
 
-    if (!coordinate) {
-      return;
-    }
-
     if (
-      coordinate.latitude &&
-      coordinate.longitude &&
-      (currentCenter?.lat() !== coordinate.latitude || currentCenter?.lng()) !== coordinate.longitude
+      coordinates.latitude &&
+      coordinates.longitude &&
+      (currentCenter?.lat() !== coordinates.latitude || currentCenter?.lng()) !== coordinates.longitude
     ) {
-      // mapRef?.setZoom(15);
+      mapRef?.setZoom(zoom);
       mapRef?.panTo({
-        lat: coordinate.latitude,
-        lng: coordinate.longitude,
+        lat: coordinates.latitude,
+        lng: coordinates.longitude,
       });
     }
-  }, [mapRef, selectedJob]);
+  }, [coordinates, mapRef, zoom]);
 
   const { jobs } = useJobsStore((state) => state);
   const { visibleJobs, setVisibleJobs } = useVisibleJobsStore();
 
   return (
     <GoggleMap
-      // className="w-full"
       defaultCenter={{
-        lat: initCoordinates?.latitude || 0,
-        lng: initCoordinates?.longitude || 0,
+        lat: coordinates.latitude,
+        lng: coordinates.longitude,
       }}
-      defaultZoom={11}
+      defaultZoom={6}
       disableDefaultUI={true}
       gestureHandling="greedy"
       mapId="8d324fafd702673d"
@@ -84,6 +66,25 @@ export function Map({ children }: { children?: React.ReactNode }) {
         });
 
         setVisibleJobs(filteredJobs);
+
+        if (filteredJobs.find((s) => s.id !== selectedJob?.id) === undefined) {
+          setSelectedJob(null);
+        }
+      }}
+      onCenterChanged={({ map }) => {
+        const center = map.getCenter();
+        if (center) {
+          setCoordinates({
+            latitude: center.lat(),
+            longitude: center.lng(),
+          });
+        }
+      }}
+      onZoomChanged={({ map }) => {
+        const zoom = map.getZoom();
+        if (zoom) {
+          setZoom(zoom);
+        }
       }}
       reuseMaps
       styles={mapStyles}

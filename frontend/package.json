@@ -11,7 +11,9 @@
   "dependencies": {
     "@heroui/react": "^2.6.14",
     "@vis.gl/react-google-maps": "^1.5.1",
+    "boxicons": "^2.1.4",
     "framer-motion": "^12.4.3",
+    "lodash": "^4.17.21",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
