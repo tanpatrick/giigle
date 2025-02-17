@@ -18,11 +18,18 @@ export function JobsList() {
   const selectedKeys = selectedJob?.id ? [selectedJob.id] : [];
 
   return (
-    <Listbox selectedKeys={selectedKeys} selectionBehavior="replace" selectionMode="single" variant="light">
+    <Listbox
+      aria-label="Jobs list"
+      selectedKeys={selectedKeys}
+      selectionBehavior="replace"
+      selectionMode="single"
+      variant="light"
+    >
       {visibleJobs.map((job) => {
         const isSelected = job.id === selectedJob?.id;
         return (
           <ListboxItem
+            aria-label={job.title}
             className={isSelected ? "border-b-1 bg-gray-200 border-2 border-dashed border-gray-500 p-5" : ""}
             description={
               <div className={`pt-1 ${isSelected ? "text-black" : ""}`}>
