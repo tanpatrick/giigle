@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -27,6 +28,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || "";
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}>
@@ -36,6 +39,7 @@ export default function RootLayout({
           </header>
           <main className="flex flex-1 overflow-hidden">{children}</main>
         </Providers>
+        <GoogleAnalytics gaId={gaId} />
       </body>
     </html>
   );
