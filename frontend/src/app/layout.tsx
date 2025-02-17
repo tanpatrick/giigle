@@ -39,7 +39,7 @@ export default function RootLayout({
           </header>
           <main className="flex flex-1 overflow-hidden">{children}</main>
         </Providers>
-        <GoogleAnalytics gaId={gaId} />
+        <GoogleAnalytics gaId={gaId} debugMode />
       </body>
     </html>
   );

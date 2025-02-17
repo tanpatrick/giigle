@@ -3,9 +3,9 @@
 import { BiMap } from "react-icons/bi";
 import { Chip } from "@heroui/chip";
 import { Listbox, ListboxItem } from "@heroui/listbox";
-import { sendGTMEvent } from "@next/third-parties/google";
 
 import { MarkerIcon } from "@/components/common/icons/MarkerIcon";
+import { sendGAEvent } from "@/components/ga/sendGAEvent";
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
 
@@ -36,7 +36,7 @@ export function JobsList() {
             }
             key={job.id}
             onPress={() => {
-              sendGTMEvent({ event: "job_selected_via_list", value: job });
+              sendGAEvent({ event: "job_selected_via_list", value: job });
               setSelectedJob(job);
             }}
             startContent={<MarkerIcon />}
@@ -48,3 +48,4 @@ export function JobsList() {
     </Listbox>
   );
 }
+

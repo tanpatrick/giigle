@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { sendGTMEvent } from "@next/third-parties/google";
 import { Map as GoggleMap, useMap } from "@vis.gl/react-google-maps";
 
+import { sendGAEvent } from "@/components/ga/sendGAEvent";
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useJobsStore } from "@/stores/jobs/useJobsStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
@@ -98,7 +98,7 @@ export function Map({ children }: { children?: React.ReactNode }) {
           key={job.id}
           location={job.location.coordinates}
           onClick={() => {
-            sendGTMEvent({ event: "job_selected_via_map", value: job });
+            sendGAEvent({ event: "job_selected_via_map", value: job });
             setSelectedJob(job);
           }}
         />
