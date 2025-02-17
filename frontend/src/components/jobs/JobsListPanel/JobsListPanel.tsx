@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { BiCurrentLocation, BiReset } from "react-icons/bi";
 import { Button, ButtonGroup } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 
@@ -25,8 +26,9 @@ export function JobsListPanel({ jobs }: { jobs: Job[] }) {
       <CardBody>
         <div className="overflow-y-auto" style={{ height: `calc(100vh - 5rem)` }}>
           <ButtonGroup className="p-2" fullWidth variant="faded">
-            <Button>My Location</Button>
+            <Button endContent={<BiCurrentLocation />}>My Location</Button>
             <Button
+              endContent={<BiReset />}
               onPress={() => {
                 setSelectedJob(null);
                 reset();

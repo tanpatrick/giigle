@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Chip } from "@heroui/react";
 
 export function JobTitle({ isSelected, title }: { isSelected: boolean; title: string }) {
   const itemRef = useRef<HTMLDivElement>(null);
@@ -15,7 +16,7 @@ export function JobTitle({ isSelected, title }: { isSelected: boolean; title: st
   }, [isSelected]);
 
   return (
-    <span className={isSelected ? "font-bold text-black" : ""} ref={itemRef}>
+    <span className={`text-lg ${isSelected ? "font-bold text-black" : ""}`} ref={itemRef}>
       {title}
     </span>
   );

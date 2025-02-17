@@ -1,5 +1,7 @@
 "use client";
 
+import { BiMap } from "react-icons/bi";
+import { Chip } from "@heroui/chip";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 
 import { MarkerIcon } from "@/components/common/icons/MarkerIcon";
@@ -20,11 +22,15 @@ export function JobsList() {
         const isSelected = job.id === selectedJob?.id;
         return (
           <ListboxItem
-            className={isSelected ? "bg-gray-200 border-2 border-dashed border-gray-500 p-5" : ""}
+            className={isSelected ? "border-b-1 bg-gray-200 border-2 border-dashed border-gray-500 p-5" : ""}
             description={
-              <div className={isSelected ? "text-black" : ""}>
+              <div className={`pt-1 ${isSelected ? "text-black" : ""}`}>
                 <div>{job.description}</div>
-                <div className="text-right mt-3">{job.location.address}</div>
+                <div className="text-right mt-3">
+                  <Chip size="sm" startContent={<BiMap />} variant="faded">
+                    {job.location.address}
+                  </Chip>
+                </div>
               </div>
             }
             key={job.id}
