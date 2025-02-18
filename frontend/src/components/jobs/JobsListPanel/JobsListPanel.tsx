@@ -24,7 +24,7 @@ export function JobsListPanel({ jobs }: { jobs: Job[] }) {
   return (
     <Card radius="none">
       <CardBody>
-        <div className="overflow-y-auto" style={{ height: `calc(100vh - 5rem)` }}>
+        <div className="overflow-y-auto pr-5" style={{ height: `calc(100vh - 6rem)` }}>
           <ButtonGroup className="p-2" fullWidth variant="faded">
             <Button endContent={<BiCurrentLocation />}>My Location</Button>
             <Button

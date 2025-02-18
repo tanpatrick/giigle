@@ -15,7 +15,7 @@ export function JobTitle({ isSelected, title }: { isSelected: boolean; title: st
   }, [isSelected]);
 
   return (
-    <span className={`text-lg ${isSelected ? "font-bold text-black" : ""}`} ref={itemRef}>
+    <span className={`text-xl ${isSelected ? "font-bold text-primary" : ""}`} ref={itemRef}>
       {title}
     </span>
   );

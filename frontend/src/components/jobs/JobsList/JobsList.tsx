@@ -4,16 +4,13 @@ import { BiMap } from "react-icons/bi";
 import { Chip } from "@heroui/chip";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 
-import { MarkerIcon } from "@/components/common/icons/MarkerIcon";
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
-import { useMapStore } from "@/stores/useMapStore";
 
 import { JobTitle } from "./JobTitle";
 
 export function JobsList() {
-  const { setZoomIn } = useMapStore();
   const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
   const { visibleJobs } = useVisibleJobsStore();
 
@@ -24,7 +21,7 @@ export function JobsList() {
       aria-label="Jobs list"
       selectedKeys={selectedKeys}
       selectionBehavior="replace"
-      selectionMode="single"
+      selectionMode="none"
       variant="light"
     >
       {visibleJobs.map((job) => {
@@ -32,12 +29,12 @@ export function JobsList() {
         return (
           <ListboxItem
             aria-label={job.title}
-            className={isSelected ? "border-b-1 bg-gray-200 border-2 border-dashed border-gray-500 p-5" : ""}
+            className={isSelected ? "border-b-1 bg-gray-200 border-2 border-dashed border-gray-500 my-5 p-5" : ""}
             description={
               <div className={`pt-1 ${isSelected ? "text-black" : ""}`}>
                 <div>{job.description}</div>
                 <div className="text-right mt-3">
-                  <Chip size="sm" startContent={<BiMap />} variant="faded">
+                  <Chip color={isSelected ? "primary" : "default"} size="sm" startContent={<BiMap />} variant="shadow">
                     {job.location.address}
                   </Chip>
                 </div>
@@ -50,9 +47,7 @@ export function JobsList() {
             }}
             onDoubleClick={() => {
               setSelectedJob(job);
-              setZoomIn(true);
             }}
-            startContent={<MarkerIcon />}
           >
             <JobTitle isSelected={isSelected} title={job.title} />
           </ListboxItem>

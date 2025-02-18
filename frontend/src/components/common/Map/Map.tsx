@@ -13,7 +13,7 @@ type MapProps = {
 };
 
 export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChildren<MapProps>) {
-  const { setZoom, zoom } = useMapStore();
+  const { coordinates, setZoom, zoom } = useMapStore();
 
   const map = useMap();
 
@@ -21,7 +21,14 @@ export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChild
     if (map && map.getZoom() !== zoom) {
       map.setZoom(zoom);
     }
-  }, [map, zoom]);
+  }, [coordinates, map, zoom]);
+
+  useEffect(() => {
+    map?.setCenter({
+      lat: coordinates.latitude,
+      lng: coordinates.longitude,
+    });
+  }, [map, coordinates]);
 
   return (
     <GoggleMap
@@ -29,7 +36,6 @@ export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChild
         lat: DEFAULT_COORDINATES.latitude,
         lng: DEFAULT_COORDINATES.longitude,
       }}
-      // zoom={zoom}
       defaultZoom={DEFAULT_ZOOM}
       disableDefaultUI={true}
       gestureHandling="greedy"

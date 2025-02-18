@@ -1,36 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
-import { useMap } from "@vis.gl/react-google-maps";
-
 import { Map } from "@/components/common/Map";
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useJobsStore } from "@/stores/jobs/useJobsStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
-import { useMapStore } from "@/stores/useMapStore";
 
 import { JobMarkers } from "./JobsMarker";
 
 export function JobsMap() {
   const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
-
   const { jobs } = useJobsStore((state) => state);
-  const { zoomIn } = useMapStore();
   const { setVisibleJobs } = useVisibleJobsStore();
-
-  const mapRef = useMap();
-
-  useEffect(() => {
-    const location = selectedJob?.location;
-
-    if (mapRef && zoomIn && location) {
-      mapRef.setZoom(20);
-      mapRef.panTo({
-        lat: location.coordinates.latitude,
-        lng: location.coordinates.longitude,
-      });
-    }
-  }, [mapRef, selectedJob, zoomIn]);
 
   return (
     <Map
