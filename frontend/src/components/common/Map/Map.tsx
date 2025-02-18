@@ -1,36 +1,52 @@
 "use client";
 
-import { PropsWithChildren } from "react";
-import { Map as GoggleMap } from "@vis.gl/react-google-maps";
+import { PropsWithChildren, useEffect } from "react";
+import { Map as GoggleMap, useMap } from "@vis.gl/react-google-maps";
 
-import { DEFAULT_COORDINATES } from "@/stores/useMapStore";
+import { DEFAULT_COORDINATES, DEFAULT_ZOOM, useMapStore } from "@/stores/useMapStore";
+
+import { MapControl } from "./MapControl";
 
 type MapProps = {
   onBoundsChanged?: (args: { map: google.maps.Map }) => void;
-  onZoomChanged?: (args: { map: google.maps.Map }) => void;
+  onZoomChanged?: (args: { map: google.maps.Map; zoom: number }) => void;
 };
 
-export const DEFAULT_ZOOM = 6;
-
 export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChildren<MapProps>) {
+  const { setZoom, zoom } = useMapStore();
+
+  const map = useMap();
+
+  useEffect(() => {
+    if (map && map.getZoom() !== zoom) {
+      map.setZoom(zoom);
+    }
+  }, [map, zoom]);
+
   return (
     <GoggleMap
       defaultCenter={{
         lat: DEFAULT_COORDINATES.latitude,
         lng: DEFAULT_COORDINATES.longitude,
       }}
+      // zoom={zoom}
       defaultZoom={DEFAULT_ZOOM}
       disableDefaultUI={true}
       gestureHandling="greedy"
       mapId="8d324fafd702673d"
       onBoundsChanged={({ map }) => onBoundsChanged?.({ map })}
-      onZoomChanged={({ map }) => onZoomChanged?.({ map })}
+      onZoomChanged={({ map }) => {
+        const zoom = map.getZoom() ?? DEFAULT_ZOOM;
+        onZoomChanged?.({ map, zoom });
+        setZoom(zoom);
+      }}
       reuseMaps
       style={{
         height: `calc(100vh - 4rem)`,
       }}
     >
       {children}
+      <MapControl />
     </GoggleMap>
   );
 }

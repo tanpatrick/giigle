@@ -7,11 +7,9 @@ import { Coordinates } from "@/types/Coordinate";
 type MapState = {
   coordinates: Coordinates;
   reset: () => void;
-  zoom: number;
-  zoomIn?: boolean;
   setCoordinates: (coordinates: Coordinates) => void;
   setZoom: (zoom: number) => void;
-  setZoomIn: (zoomIn: boolean) => void;
+  zoom: number;
 };
 
 export const DEFAULT_COORDINATES: Coordinates = {
@@ -19,13 +17,15 @@ export const DEFAULT_COORDINATES: Coordinates = {
   longitude: 174.3049863,
 };
 
+export const DEFAULT_ZOOM = 6;
+export const DEFAULT_MAX_ZOOM = 20;
+
 export const useMapStore = create<MapState>()(
   devtools((set) => ({
     coordinates: DEFAULT_COORDINATES,
-    reset: () => set(() => ({ coordinates: DEFAULT_COORDINATES, zoom: 6 })),
+    reset: () => set(() => ({ coordinates: DEFAULT_COORDINATES, zoom: DEFAULT_ZOOM })),
     setCoordinates: debounce((coordinates) => set(() => ({ coordinates })), 500),
     setZoom: debounce((zoom) => set(() => ({ zoom })), 500),
-    setZoomIn: (zoomIn) => set(() => ({ zoomIn })),
     zoom: 6,
   }))
 );
