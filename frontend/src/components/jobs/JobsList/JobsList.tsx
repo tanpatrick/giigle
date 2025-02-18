@@ -8,10 +8,12 @@ import { MarkerIcon } from "@/components/common/icons/MarkerIcon";
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
 import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
 import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
+import { useMapStore } from "@/stores/useMapStore";
 
 import { JobTitle } from "./JobTitle";
 
 export function JobsList() {
+  const { setZoomIn } = useMapStore();
   const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
   const { visibleJobs } = useVisibleJobsStore();
 
@@ -46,6 +48,10 @@ export function JobsList() {
               sendGAEvent({ event: "job_selected_via_list", value: job });
               setSelectedJob(job);
             }}
+            onDoubleClick={() => {
+              setSelectedJob(job);
+              setZoomIn(true);
+            }}
             startContent={<MarkerIcon />}
           >
             <JobTitle isSelected={isSelected} title={job.title} />
@@ -55,4 +61,3 @@ export function JobsList() {
     </Listbox>
   );
 }
-

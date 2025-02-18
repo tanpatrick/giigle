@@ -1,5 +1,5 @@
-import { Map } from "@/components/common/Map";
 import { JobsListPanel } from "@/components/jobs/JobsListPanel";
+import { JobsMap } from "@/components/jobs/JobsMap";
 import { JobsResponse } from "@/types/Jobs";
 
 export async function HomePage() {
@@ -10,7 +10,7 @@ export async function HomePage() {
     <div className="w-full" style={{ height: `calc(100vh - 4rem)` }}>
       <div className="grid grid-cols-1 md:grid-cols-[30%,70%]">
         <JobsListPanel jobs={jobs.items} />
-        <Map />
+        <JobsMap />
       </div>
     </div>
   );
