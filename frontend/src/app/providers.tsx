@@ -5,7 +5,7 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <HeroUIProvider locale="es-GB">
+    <HeroUIProvider locale="en-GB">
       <MapProvider>{children}</MapProvider>
     </HeroUIProvider>
   );

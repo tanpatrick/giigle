@@ -7,6 +7,6 @@ export const navbarItems: NavbarItemProps[] = [
   },
   {
     href: "/jobs/new",
-    label: "Post new job",
+    label: "Got a Gig? Post It Here!",
   },
 ];
