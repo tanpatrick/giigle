@@ -1,17 +1,17 @@
 import { Coordinates } from "./Coordinate";
 
-export type Job = {
+export type Gig = {
   description: string;
   id: string;
-  location: JobLocation;
+  location: GigLocation;
   title: string;
 };
 
-export type JobLocation = {
+export type GigLocation = {
   address: string;
   coordinates: Coordinates;
 };
 
-export type JobsResponse = {
-  items: Job[];
+export type GigsResponse = {
+  items: Gig[];
 };

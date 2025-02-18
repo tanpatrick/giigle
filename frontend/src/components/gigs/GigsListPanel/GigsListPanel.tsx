@@ -5,21 +5,21 @@ import { BiCurrentLocation, BiReset } from "react-icons/bi";
 import { Button, ButtonGroup } from "@heroui/button";
 import { Card, CardBody } from "@heroui/card";
 
-import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
-import { useJobsStore } from "@/stores/jobs/useJobsStore";
+import { useGigSelectionStore } from "@/stores/gigs/useGigSelectionStore";
+import { useGigsStore } from "@/stores/gigs/useGigsStore";
 import { useMapStore } from "@/stores/useMapStore";
-import { Job } from "@/types/Jobs";
+import { Gig } from "@/types/Gigs";
 
-import { JobsList } from "../JobsList/JobsList";
+import { GigsList } from "../GigsList";
 
-export function JobsListPanel({ jobs }: { jobs: Job[] }) {
-  const { setJobs } = useJobsStore();
-  const { setSelectedJob } = useJobSelectionStore((state) => state);
+export function GigsListPanel({ gigs }: { gigs: Gig[] }) {
+  const { setGigs } = useGigsStore();
+  const { setSelectedGig } = useGigSelectionStore((state) => state);
   const { reset } = useMapStore();
 
   useEffect(() => {
-    setJobs(jobs);
-  }, [jobs, setJobs]);
+    setGigs(gigs);
+  }, [gigs, setGigs]);
 
   return (
     <Card radius="none">
@@ -30,14 +30,14 @@ export function JobsListPanel({ jobs }: { jobs: Job[] }) {
             <Button
               endContent={<BiReset />}
               onPress={() => {
-                setSelectedJob(null);
+                setSelectedGig(null);
                 reset();
               }}
             >
               Reset Map
             </Button>
           </ButtonGroup>
-          <JobsList />
+          <GigsList />
         </div>
       </CardBody>
     </Card>

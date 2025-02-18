@@ -5,20 +5,20 @@ import { Chip } from "@heroui/chip";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
-import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
-import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
+import { useGigSelectionStore } from "@/stores/gigs/useGigSelectionStore";
+import { useVisibleJobsStore } from "@/stores/gigs/useVisibleGigsStore";
 
-import { JobTitle } from "./JobTitle";
+import { GigTitle } from "./GigTitle";
 
-export function JobsList() {
-  const { selectedJob, setSelectedJob } = useJobSelectionStore((state) => state);
-  const { visibleJobs } = useVisibleJobsStore();
+export function GigsList() {
+  const { selectedGig: selectedJob, setSelectedGig: setSelectedJob } = useGigSelectionStore((state) => state);
+  const { visibleGigs: visibleJobs } = useVisibleJobsStore();
 
   const selectedKeys = selectedJob?.id ? [selectedJob.id] : [];
 
   return (
     <Listbox
-      aria-label="Jobs list"
+      aria-label="Gigs list"
       selectedKeys={selectedKeys}
       selectionBehavior="replace"
       selectionMode="none"
@@ -49,7 +49,7 @@ export function JobsList() {
               setSelectedJob(job);
             }}
           >
-            <JobTitle isSelected={isSelected} title={job.title} />
+            <GigTitle isSelected={isSelected} title={job.title} />
           </ListboxItem>
         );
       })}

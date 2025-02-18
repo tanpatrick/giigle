@@ -1,11 +1,11 @@
 import { Marker } from "@/components/common/Map";
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
-import { useJobSelectionStore } from "@/stores/jobs/useJobSelectionStore";
-import { useVisibleJobsStore } from "@/stores/jobs/useVisibleJobsStore";
+import { useGigSelectionStore } from "@/stores/gigs/useGigSelectionStore";
+import { useVisibleJobsStore } from "@/stores/gigs/useVisibleGigsStore";
 
-export function JobMarkers() {
-  const { selectedJob, setSelectedJob } = useJobSelectionStore();
-  const { visibleJobs } = useVisibleJobsStore();
+export function GigsMarkers() {
+  const { selectedGig: selectedJob, setSelectedGig: setSelectedJob } = useGigSelectionStore();
+  const { visibleGigs: visibleJobs } = useVisibleJobsStore();
 
   return visibleJobs.map((job) => (
     <Marker

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function JobTitle({ isSelected, title }: { isSelected: boolean; title: string }) {
+export function GigTitle({ isSelected, title }: { isSelected: boolean; title: string }) {
   const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

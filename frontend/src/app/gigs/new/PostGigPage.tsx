@@ -20,7 +20,7 @@ const items: { key: keyof typeof PayType; label: string }[] = [
   { key: "HOURLY", label: "Hourly" },
 ];
 
-export function NewJobPage() {
+export function PostGigPage() {
   const [selectedPayType, setSelectedPayType] = useState<PayType | null>(null);
 
   return (

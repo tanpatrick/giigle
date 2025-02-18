@@ -3,10 +3,10 @@ import { NavbarItemProps } from "./NavbarItem";
 export const navbarItems: NavbarItemProps[] = [
   {
     href: "/",
-    label: "Jobs",
+    label: "Gigs",
   },
   {
-    href: "/jobs/new",
+    href: "/gigs/new",
     label: "Got a Gig? Post It Here!",
   },
 ];
