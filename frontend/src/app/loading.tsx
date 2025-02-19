@@ -1,3 +1,5 @@
+import { Skeleton } from "@heroui/skeleton";
+
 export default function Loading() {
   return (
     <div className="w-full">
@@ -6,7 +8,11 @@ export default function Loading() {
           <div className="w-full">
             <div className="p-2 space-y-2 animate-pulse">
               {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className="h-20 p-5 bg-gray-200 rounded-md"></div>
+                <div className="mb-3" key={i}>
+                  <Skeleton className="h-8 mb-2 w-3/5 rounded-lg" />
+                  <Skeleton className="h-24 mb-2 w-full rounded-lg" />
+                  <Skeleton className="h-8 w-1/4 rounded-3xl ml-auto" />
+                </div>
               ))}
             </div>
           </div>
