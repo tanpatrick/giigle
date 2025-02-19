@@ -13,7 +13,7 @@ type MapProps = {
 };
 
 export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChildren<MapProps>) {
-  const { coordinates, setZoom, zoom } = useMapStore();
+  const { coordinates, setCoordinates, setZoom, zoom } = useMapStore();
 
   const map = useMap();
 
@@ -40,7 +40,17 @@ export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChild
       disableDefaultUI={true}
       gestureHandling="greedy"
       mapId="8d324fafd702673d"
-      onBoundsChanged={({ map }) => onBoundsChanged?.({ map })}
+      onBoundsChanged={({ map }) => {
+        const center = map.getCenter();
+
+        if (center) {
+          setCoordinates({
+            latitude: center.lat(),
+            longitude: center.lng(),
+          });
+        }
+        onBoundsChanged?.({ map });
+      }}
       onZoomChanged={({ map }) => {
         const zoom = map.getZoom() ?? DEFAULT_ZOOM;
         onZoomChanged?.({ map, zoom });
