@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  description: ...
+  title: ...
+  version: 1.0.0
+
+paths:
+  /gigs:
+    get:
+      operationId: listGigs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GigResponse'
+                type: array
+          description: List of gigs
+      summary: Get a list of gigs
+      tags:
+        - Gig
+    post:
+      operationId: createGig
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GigResponse'
+          description: Gig created successfully
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGigRequest'
+        required: true
+      summary: Create a new gig
+      tags:
+        - Gig
+
+  /gigs/{id}:
+    get:
+      operationId: getGigById
+      parameters:
+        - description: The unique ID of the gig
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Gig details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GigResponse'
+        '404':
+          description: Gig not found
+      summary: Get a gig by ID
+      tags:
+        - Gig
+
+components:
+  schemas:
+    CreateGigRequest:
+      properties:
+        date:
+          type: string
+          format: date
+        description:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        pay:
+          $ref: '#/components/schemas/Money'
+        payType:
+          $ref: '#/components/schemas/PayTypeEnum'
+        title:
+          type: string
+      required:
+        - date
+        - description
+        - location
+        - pay
+        - payType
+        - title
+      type: object
+
+    GigResponse:
+      type: object
+      properties:
+        date:
+          $ref: '#/components/schemas/CreateGigRequest/properties/date'
+        description:
+          type: string
+        id:
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+        pay:
+          $ref: '#/components/schemas/Money'
+        payType:
+          $ref: '#/components/schemas/PayTypeEnum'
+        title:
+          type: string
+
+    # ...
+    Coordinates:
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+      required:
+        - latitude
+        - longitude
+      type: object
+    Location:
+      properties:
+        address:
+          type: string
+        coordinates:
+          $ref: '#/components/schemas/Coordinates'
+      required:
+        - address
+        - coordinates
+      type: object
+    Money:
+      format: float
+      type: number
+    PayTypeEnum:
+      type: string
+      enum:
+        - FIXED
+        - HOURLY
+
