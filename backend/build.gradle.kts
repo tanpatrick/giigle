@@ -89,6 +89,10 @@ repositories {
     mavenCentral()
 }
 
+tasks.bootJar {
+    archiveFileName.set("giigle-api.jar")
+}
+
 tasks.withType<JavaCompile> {
     dependsOn("openApiGenerate")
 }
