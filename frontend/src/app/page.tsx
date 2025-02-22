@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const response = await fetch("https://dummyjson.com/c/f0b2-6c22-4776-b5a0?delay=1000");
-  const { items: gigs = [] }: GigsResponse = await response.json();
-
+  const response = await fetch(`${process.env.BACKEND_ENDPOINT}/gigs`);
+  const gigs: GigsResponse = await response.json();
   return <HomePage gigs={gigs} />;
 }

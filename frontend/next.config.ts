@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async rewrites() {
+    return [
+      {
+        source: "/v1/:path*",
+        destination: `${process.env.BACKEND_ENDPOINT}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -8,8 +8,11 @@ import { useVisibleJobsStore } from "@/stores/gigs/useVisibleGigsStore";
 import { GigsMarkers } from "./GigsMarker";
 
 export function GigsMap() {
-  const { selectedGig, setSelectedGig } = useGigSelectionStore((state) => state);
-  const { gigs } = useGigsStore((state) => state);
+  const selectedGig = useGigSelectionStore((state) => state.selectedGig);
+
+  const setSelectedGig = useGigSelectionStore((state) => state.setSelectedGig);
+  const gigs = useGigsStore((state) => state.gigs);
+
   const { setVisibleGigs: setVisibleJobs } = useVisibleJobsStore();
 
   return (
@@ -25,7 +28,7 @@ export function GigsMap() {
 
         setVisibleJobs(filteredJobs);
 
-        if (filteredJobs.find((s) => s.id !== selectedGig?.id) === undefined) {
+        if (filteredJobs.find(({ id }) => id !== selectedGig?.id) === undefined) {
           setSelectedGig(null);
         }
       }}
