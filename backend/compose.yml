@@ -1,0 +1,17 @@
+services:
+  database:
+    container_name: giigle-db
+    environment:
+      POSTGRES_DB: giigle
+      POSTGRES_PASSWORD: giigle
+      POSTGRES_USER: giigle
+    healthcheck:
+      interval: 10s       # Check every 10 seconds
+      retries: 5          # Consider unhealthy after 5 failed checks
+      start_period: 30s   # Wait 30 seconds before starting the checks
+      test: [ "CMD-SHELL", "pg_isready -U giigle" ]
+      timeout: 5s         # Timeout if no response after 5 seconds
+    image: postgres
+    ports:
+      - 8888:5432
+    restart: always
