@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:8888/giigle
+    username: giigle
+    password: giigle
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true

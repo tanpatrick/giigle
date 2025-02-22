@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: giigle-api
+  datasource:
+    hikari:
+      connection-timeout: "${DB_CONNECTION_TIMEOUT_MS:10000}"
+      idle-timeout: "${DB_IDLE_TIMEOUT_MS:60000}"
+      maximum-pool-size: "${DB_MAXIMUM_POOL_SIZE:2}"
+      minimum-idle: "${DB_MINIMUM_IDLE:0}"
+    url: "${DB_URL}"
+    username: "${DB_USERNAME}"
+    password: "${DB_PASSWORD}"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+springdoc:
+  swagger-ui.path: /swagger-ui.html
