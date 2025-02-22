@@ -13,9 +13,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/GigResponse'
-                type: array
+                $ref: '#/components/schemas/GigResponse'
           description: List of gigs
       summary: Get a list of gigs
       tags:
@@ -27,7 +25,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GigResponse'
+                $ref: '#/components/schemas/Gig'
           description: Gig created successfully
       requestBody:
         content:
@@ -40,6 +38,23 @@ paths:
         - Gig
 
   /gigs/{id}:
+    delete:
+      operationId: deleteGigById
+      parameters:
+        - description: The unique ID of the gig
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Gig successfully deleted
+        '404':
+          description: Gig not found
+      summary: Delete a gig by ID
+      tags:
+        - Gig
     get:
       operationId: getGigById
       parameters:
@@ -55,7 +70,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GigResponse'
+                $ref: '#/components/schemas/Gig'
         '404':
           description: Gig not found
       summary: Get a gig by ID
@@ -72,7 +87,7 @@ components:
         description:
           type: string
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: '#/components/schemas/GigLocation'
         pay:
           $ref: '#/components/schemas/Money'
         payType:
@@ -88,8 +103,7 @@ components:
         - title
       type: object
 
-    GigResponse:
-      type: object
+    Gig:
       properties:
         date:
           $ref: '#/components/schemas/CreateGigRequest/properties/date'
@@ -98,13 +112,32 @@ components:
         id:
           type: string
         location:
-          $ref: '#/components/schemas/Location'
+          $ref: '#/components/schemas/GigLocation'
         pay:
           $ref: '#/components/schemas/Money'
         payType:
           $ref: '#/components/schemas/PayTypeEnum'
         title:
           type: string
+      required:
+        - date
+        - description
+        - id
+        - location
+        - pay
+        - payType
+        - title
+      type: object
+
+    GigResponse:
+      properties:
+        gigs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Gig'
+      required:
+        - gigs
+      type: object
 
     # ...
     Coordinates:
@@ -119,7 +152,8 @@ components:
         - latitude
         - longitude
       type: object
-    Location:
+
+    GigLocation:
       properties:
         address:
           type: string
@@ -129,8 +163,8 @@ components:
         - address
         - coordinates
       type: object
+
     Money:
-      format: float
       type: number
     PayTypeEnum:
       type: string
