@@ -90,7 +90,7 @@ repositories {
 }
 
 tasks.bootJar {
-    archiveFileName.set("giigle-api.jar")
+    archiveFileName.set("${project.name}.jar")
 }
 
 tasks.withType<JavaCompile> {

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: giggle-api
+    name: giigle-api
 
 springdoc:
   swagger-ui.path: /swagger-ui.html

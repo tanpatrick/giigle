@@ -1,1 +1,1 @@
-rootProject.name = "giggle-api"
+rootProject.name = "giigle-api"
