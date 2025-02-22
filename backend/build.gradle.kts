@@ -80,6 +80,7 @@ plugins {
     kotlin("plugin.jpa") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
 
+    id("com.diffplug.spotless") version "7.0.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.openapi.generator") version "7.10.0"
     id("org.springframework.boot") version "3.4.3"
@@ -87,6 +88,20 @@ plugins {
 
 repositories {
     mavenCentral()
+}
+
+spotless {
+    val ktlintVersion = "1.5.0"
+
+    kotlin {
+        ktlint(ktlintVersion)
+        target("src/**/*.kt")
+    }
+
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint(ktlintVersion)
+    }
 }
 
 tasks.bootJar {
