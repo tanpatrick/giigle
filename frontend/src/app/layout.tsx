@@ -2,7 +2,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { Narbar } from "@/components/common/Navbar";
+import { Navbar } from "@/components/common/Navbar";
 
 import { Providers } from "./providers";
 
@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}>
         <Providers>
           <header>
-            <Narbar />
+            <Navbar />
           </header>
           <main className="flex flex-1 overflow-hidden">{children}</main>
         </Providers>

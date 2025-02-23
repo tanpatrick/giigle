@@ -1,20 +1,21 @@
 "use client";
 
-import { Link } from "@heroui/link";
 import { NavbarItem as HeroNavbarItem } from "@heroui/navbar";
-import NextLink from "next/link";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export type NavbarItemProps = {
   href: string;
   label: string;
+  onClick?: () => void;
 };
 
-export function NavbarItem({ href, label }: NavbarItemProps) {
+export function NavbarItem({ href, label, onClick }: NavbarItemProps) {
   const pathname = usePathname();
+
   return (
-    <HeroNavbarItem key={label} isActive={href === pathname}>
-      <Link as={NextLink} href={href}>
+    <HeroNavbarItem isActive={href === pathname} key={href} onClick={onClick}>
+      <Link color="foreground" href={href}>
         {label}
       </Link>
     </HeroNavbarItem>

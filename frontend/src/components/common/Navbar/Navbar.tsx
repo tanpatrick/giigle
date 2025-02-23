@@ -1,34 +1,67 @@
-import { Navbar as HeroNavbar, NavbarBrand, NavbarContent } from "@heroui/navbar";
+"use client";
+
+import { useState } from "react";
+import { BiSearch } from "react-icons/bi";
+import {
+  Navbar as HeroNavbar,
+  NavbarBrand as HeroNavbarBrand,
+  NavbarContent as HeroNavbarContent,
+  NavbarMenu,
+  NavbarMenuToggle as HeroNavbarMenuToggle,
+} from "@heroui/navbar";
+import { usePathname } from "next/navigation";
+
+import { Input } from "@/ui-library/Input";
 
 import { NavbarItem } from "./NavbarItem";
 import { navbarItems } from "./navbarItems";
+import { NavbarLogo } from "./NavbarLogo";
+import { UserMenuItem } from "./UserMenuItem";
 
-export const Logo = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="58" height="58" fill="none">
-      {/* Location Pin */}
-      <circle cx="50" cy="50" r="30" fill="#FF6347" />
-      {/* Magnifying Glass */}
-      <circle cx="50" cy="50" r="15" fill="#FFD700" stroke="#1E90FF" strokeWidth="4" />
-      <rect x="60" y="55" width="12" height="5" rx="3" fill="#4CAF50" />
-      <path d="M65 60 L75 70" stroke="#1E90FF" strokeWidth="4" strokeLinecap="round" />
-      <circle cx="75" cy="70" r="4" fill="#1E90FF" />
-    </svg>
-  );
-};
+export function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-export function Narbar() {
   return (
-    <HeroNavbar isBordered>
-      <NavbarBrand>
-        <Logo />
-        <p className="font-bold text-inherit">giigle</p>
-      </NavbarBrand>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {navbarItems.map(({ href, label }) => (
-          <NavbarItem key={label} href={href} label={label} />
-        ))}
-      </NavbarContent>
+    <HeroNavbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <HeroNavbarContent justify="center">
+        <HeroNavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
+
+        <HeroNavbarBrand>
+          <NavbarLogo />
+          <p className="font-bold text-inherit">giigle</p>
+        </HeroNavbarBrand>
+
+        <HeroNavbarContent className="gap-3 hidden ml-5 sm:flex">
+          {navbarItems.map((item) => (
+            <NavbarItem key={item.href} {...item} />
+          ))}
+        </HeroNavbarContent>
+
+        <NavbarMenu>
+          {navbarItems.map((item) => (
+            <NavbarItem key={item.href} {...item} onClick={() => setIsMenuOpen(false)} />
+          ))}
+        </NavbarMenu>
+      </HeroNavbarContent>
+
+      <HeroNavbarContent as="div" className="items-center" justify="end">
+        {pathname === "/" && (
+          <Input
+            classNames={{
+              base: "max-w-full sm:max-w-[10rem] h-10",
+              mainWrapper: "h-full",
+              input: "text-small",
+              inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
+            }}
+            placeholder="Type to search..."
+            size="sm"
+            startContent={<BiSearch />}
+            type="search"
+          />
+        )}
+        <UserMenuItem />
+      </HeroNavbarContent>
     </HeroNavbar>
   );
 }
