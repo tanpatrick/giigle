@@ -19,7 +19,7 @@ export enum PayType {
 
 const items: { key: keyof typeof PayType; label: string }[] = [
   { key: "FIXED", label: "Fixed" },
-  { key: "HOURLY", label: "Hourly" },
+  // { key: "HOURLY", label: "Hourly" },
 ];
 
 export const NZ_COORDINATES = [
@@ -53,16 +53,18 @@ export function PostGigPage() {
             e.preventDefault();
 
             const data = Object.fromEntries(new FormData(e.currentTarget));
+            const body = {
+              ...data,
+              location: NZ_COORDINATES[Math.floor(Math.random() * NZ_COORDINATES.length)],
+              pay: Number(data.pay),
+            };
 
             fetch(ENV_CONFIG.ENDPOINTS.GIGS, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({
-                ...data,
-                location: NZ_COORDINATES[Math.floor(Math.random() * NZ_COORDINATES.length)],
-              }),
+              body: JSON.stringify(body),
             })
               .then((res) => res.json())
               .then(() => {
@@ -91,6 +93,7 @@ export function PostGigPage() {
               isRequired
               items={items}
               label="Pay Type"
+              name="payType"
               placeholder="Select pay type e.g. Hourly"
               onSelectionChange={({ currentKey }) => {
                 setSelectedPayType(currentKey as PayType);
@@ -100,12 +103,12 @@ export function PostGigPage() {
             {selectedPayType === PayType.FIXED && (
               <>
                 <DatePicker label="Date" minValue={today(getLocalTimeZone())} name="date" />
-                <Input isRequired label="Pay" name="rate" placeholder="0.00" startContent="$" type="number" />
+                <Input isRequired label="Pay" name="pay" placeholder="0.00" startContent="$" type="number" />
               </>
             )}
             {selectedPayType === PayType.HOURLY && (
               <>
-                <Input label="Hourly Rate" name="rate" placeholder="0.00" startContent="$" type="number" />
+                <Input label="Hourly Rate" name="pay" placeholder="0.00" startContent="$" type="number" />
                 <DatePicker granularity="minute" hourCycle={12} label="Start" minValue={today(getLocalTimeZone())} />
                 <DatePicker granularity="minute" hourCycle={12} label="End" minValue={today(getLocalTimeZone())} />
               </>
