@@ -14,6 +14,7 @@
     "@next/third-parties": "^15.1.7",
     "@vis.gl/react-google-maps": "^1.5.1",
     "boxicons": "^2.1.4",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.4.3",
     "lodash": "^4.17.21",
     "next": "^15.1.7",

@@ -16,9 +16,9 @@ export function HomePage({ gigs }: { gigs: Gig[] }) {
 
   return (
     <div className="w-full" style={{ height: `calc(100vh - 4rem)` }}>
-      <div className="grid grid-cols-1 md:grid-cols-[30%,70%]">
-        <GigsListPanel />
+      <div className="grid grid-cols-1 md:grid-cols-[70%,30%]">
         <GigsMap />
+        <GigsListPanel />
       </div>
     </div>
   );

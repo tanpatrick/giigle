@@ -1,58 +1,73 @@
 "use client";
 
-import { BiMap } from "react-icons/bi";
-import { Chip } from "@heroui/chip";
-import { Listbox, ListboxItem } from "@heroui/listbox";
+import { BiCalendar, BiMap, BiMoney } from "react-icons/bi";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Avatar } from "@heroui/react";
+import clsx from "clsx";
 
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
 import { useGigSelectionStore } from "@/stores/gigs/useGigSelectionStore";
 import { useVisibleJobsStore } from "@/stores/gigs/useVisibleGigsStore";
-
-import { GigTitle } from "./GigTitle";
+import { formatCurrency, formatDate } from "@/utils/formatter";
 
 export function GigsList() {
   const { selectedGig: selectedJob, setSelectedGig: setSelectedJob } = useGigSelectionStore((state) => state);
   const { visibleGigs: visibleJobs } = useVisibleJobsStore();
 
-  const selectedKeys = selectedJob?.id ? [selectedJob.id] : [];
-
-  return (
-    <Listbox
-      aria-label="Gigs list"
-      selectedKeys={selectedKeys}
-      selectionBehavior="replace"
-      selectionMode="none"
-      variant="light"
-    >
-      {visibleJobs.map((job) => {
-        const isSelected = job.id === selectedJob?.id;
-        return (
-          <ListboxItem
-            aria-label={job.title}
-            className={isSelected ? "border-b-1 bg-gray-200 border-2 border-dashed border-gray-500 my-5 p-5" : ""}
-            description={
-              <div className={`pt-1 ${isSelected ? "text-black" : ""}`}>
-                <div>{job.description}</div>
-                <div className="text-right mt-3">
-                  <Chip color={isSelected ? "primary" : "default"} size="sm" startContent={<BiMap />} variant="shadow">
-                    {job.location.address}
-                  </Chip>
+  return visibleJobs.map((job, index) => {
+    const randomAvatarUrl = `https://api.dicebear.com/9.x/bottts/svg?seed=${index}`;
+    const isSelected = job.id === selectedJob?.id;
+    return (
+      <div className="my-4 mx-3" key={job.id}>
+        <Card
+          className={clsx([{ "border-3": isSelected }])}
+          fullWidth
+          isHoverable
+          isPressable
+          onPress={() => {
+            sendGAEvent({ event: "job_selected_via_list", value: job });
+            setSelectedJob(job);
+          }}
+          radius="lg"
+        >
+          <CardHeader>
+            <div className="flex gap-5">
+              <Avatar isBordered radius="full" size="md" src={randomAvatarUrl} />
+              <div className="flex flex-col gap-1 items-start justify-center">
+                <h4
+                  className={clsx([
+                    "text-small font-semibold leading-none text-default-600",
+                    {
+                      "text-primary-600": isSelected,
+                    },
+                  ])}
+                >
+                  {job.title}
+                </h4>
+                <div className="flex gap-1">
+                  <BiMap className="font-semibold text-default-400 text-small" />
+                  <p className="text-default-400 text-small">{job.location.address}</p>
                 </div>
               </div>
-            }
-            key={job.id}
-            onPress={() => {
-              sendGAEvent({ event: "job_selected_via_list", value: job });
-              setSelectedJob(job);
-            }}
-            onDoubleClick={() => {
-              setSelectedJob(job);
-            }}
-          >
-            <GigTitle isSelected={isSelected} title={job.title} />
-          </ListboxItem>
-        );
-      })}
-    </Listbox>
-  );
+            </div>
+          </CardHeader>
+          <CardBody className="px-3 py-0 text-medium text-default-400">
+            <p>{job.description}</p>
+          </CardBody>
+          <CardFooter className="gap-3">
+            <div className="flex gap-1">
+              <BiCalendar className="font-semibold text-default-400 text-small" />
+              <p className=" text-default-400 text-small">{formatDate(job.date)}</p>
+            </div>
+            <div className="flex gap-1">
+              <BiMoney className="font-semibold text-default-400 text-small" />
+              <p className=" text-default-400 text-small">
+                {formatCurrency(job.pay)} ({job.payType.toLocaleLowerCase()})
+              </p>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  });
 }
