@@ -1,8 +1,9 @@
 "use client";
 
 import { BiCalendar, BiMap, BiMoney } from "react-icons/bi";
+import { Alert } from "@heroui/alert";
+import { Avatar } from "@heroui/avatar";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Avatar } from "@heroui/react";
 import clsx from "clsx";
 
 import { sendGAEvent } from "@/components/ga/sendGAEvent";
@@ -14,9 +15,23 @@ export function GigsList() {
   const { selectedGig: selectedJob, setSelectedGig: setSelectedJob } = useGigSelectionStore((state) => state);
   const { visibleGigs: visibleJobs } = useVisibleJobsStore();
 
+  if (!visibleJobs.length) {
+    return (
+      <div className="my-4 mx-3">
+        <Alert
+          color="warning"
+          description="No jobs here yet! Try expanding your search or checking back later—something great might pop up soon!"
+          hideIcon
+          title={<strong>Job Desert Ahead! 🌵</strong>}
+        />
+      </div>
+    );
+  }
+
   return visibleJobs.map((job, index) => {
     const randomAvatarUrl = `https://api.dicebear.com/9.x/bottts/svg?seed=${index}`;
     const isSelected = job.id === selectedJob?.id;
+
     return (
       <div className="my-4 mx-3" key={job.id}>
         <Card

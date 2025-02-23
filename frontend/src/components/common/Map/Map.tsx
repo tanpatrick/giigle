@@ -8,11 +8,12 @@ import { DEFAULT_COORDINATES, DEFAULT_ZOOM, useMapStore } from "@/stores/useMapS
 import { MapControl } from "./MapControl";
 
 type MapProps = {
+  className?: string;
   onBoundsChanged?: (args: { map: google.maps.Map }) => void;
   onZoomChanged?: (args: { map: google.maps.Map; zoom: number }) => void;
 };
 
-export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChildren<MapProps>) {
+export function Map({ children, className, onBoundsChanged, onZoomChanged }: PropsWithChildren<MapProps>) {
   const { coordinates, setCoordinates, setZoom, zoom } = useMapStore();
 
   const map = useMap();
@@ -32,6 +33,7 @@ export function Map({ children, onBoundsChanged, onZoomChanged }: PropsWithChild
 
   return (
     <GoggleMap
+      className={className}
       defaultCenter={{
         lat: DEFAULT_COORDINATES.latitude,
         lng: DEFAULT_COORDINATES.longitude,

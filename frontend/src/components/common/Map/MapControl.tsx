@@ -11,7 +11,7 @@ export function MapControl() {
   const { reset, setCoordinates, setZoom, zoom } = useMapStore();
 
   return (
-    <GoogleMapControl position={ControlPosition.RIGHT_BOTTOM}>
+    <GoogleMapControl position={ControlPosition.RIGHT_TOP}>
       <div className="p-3">
         <ButtonGroup color="primary" size="md" variant="shadow">
           <Tooltip content="Zoom in">
