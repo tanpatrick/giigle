@@ -3,7 +3,6 @@
 import { Map } from "@/components/common/Map";
 import { useGigSelectionStore } from "@/stores/gigs/useGigSelectionStore";
 import { useGigsStore } from "@/stores/gigs/useGigsStore";
-import { useVisibleJobsStore } from "@/stores/gigs/useVisibleGigsStore";
 
 import { GigsMarkers } from "./GigsMarker";
 
@@ -13,7 +12,7 @@ export function GigsMap() {
   const setSelectedGig = useGigSelectionStore((state) => state.setSelectedGig);
   const gigs = useGigsStore((state) => state.gigs);
 
-  const { setVisibleGigs: setVisibleJobs } = useVisibleJobsStore();
+  const { setVisibleGigs } = useGigsStore();
 
   return (
     <Map
@@ -26,7 +25,7 @@ export function GigsMap() {
           })
           .sort(({ location: a }, { location: b }) => b.coordinates.latitude - a.coordinates.latitude);
 
-        setVisibleJobs(filteredJobs);
+        setVisibleGigs(filteredJobs);
 
         if (filteredJobs.find(({ id }) => id !== selectedGig?.id) === undefined) {
           setSelectedGig(null);
