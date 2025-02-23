@@ -12,4 +12,6 @@ export type GigLocation = {
   coordinates: Coordinates;
 };
 
-export type GigsResponse = Gig[];
+export type GigsResponse = {
+  gigs: Gig[];
+};

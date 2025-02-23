@@ -12,6 +12,6 @@ export default async function Page() {
   const response = await fetch(`${process.env.BACKEND_ENDPOINT}/gigs`, {
     cache: "no-store",
   });
-  const gigs: GigsResponse = await response.json();
+  const { gigs }: GigsResponse = await response.json();
   return <HomePage gigs={gigs} />;
 }
