@@ -1,4 +1,4 @@
-package giggle.backend.core.service
+package giigle.backend.core.service
 
 interface CrudService<T, S, R> {
     fun create(request: T): S

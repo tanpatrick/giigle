@@ -1,16 +1,16 @@
-package giggle.backend.modules.gig.service
+package giigle.backend.modules.gig.service
 
-import giggle.backend.core.service.CrudService
-import giggle.backend.modules.gig.entity.GigEntity
-import giggle.backend.modules.gig.entity.GigLocationEntity
-import giggle.backend.modules.gig.entity.PayType
-import giggle.backend.modules.gig.repository.GigRepository
-import giggle.generate.model.Coordinates
-import giggle.generate.model.CreateGigRequest
-import giggle.generate.model.Gig
-import giggle.generate.model.GigLocation
-import giggle.generate.model.GigResponse
-import giggle.generate.model.PayTypeEnum
+import giigle.backend.core.service.CrudService
+import giigle.backend.modules.gig.entity.GigEntity
+import giigle.backend.modules.gig.entity.GigLocationEntity
+import giigle.backend.modules.gig.entity.PayType
+import giigle.backend.modules.gig.repository.GigRepository
+import giigle.generated.model.Coordinates
+import giigle.generated.model.CreateGigRequest
+import giigle.generated.model.Gig
+import giigle.generated.model.GigLocation
+import giigle.generated.model.GigResponse
+import giigle.generated.model.PayTypeEnum
 import org.springframework.stereotype.Service
 
 @Service

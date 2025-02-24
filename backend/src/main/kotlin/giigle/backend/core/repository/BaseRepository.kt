@@ -1,6 +1,6 @@
-package giggle.backend.core.repository
+package giigle.backend.core.repository
 
-import giggle.backend.core.entity.BaseEntity
+import giigle.backend.core.entity.BaseEntity
 import org.springframework.data.repository.ListCrudRepository
 import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.data.repository.PagingAndSortingRepository

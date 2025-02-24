@@ -1,6 +1,6 @@
-package giggle.backend.core.entity
+package giigle.backend.core.entity
 
-import giggle.backend.NZ_TIMEZONE
+import giigle.backend.NZ_TIMEZONE
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.Id

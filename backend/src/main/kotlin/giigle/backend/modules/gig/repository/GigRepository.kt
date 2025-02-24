@@ -1,7 +1,7 @@
-package giggle.backend.modules.gig.repository
+package giigle.backend.modules.gig.repository
 
-import giggle.backend.core.repository.BaseRepository
-import giggle.backend.modules.gig.entity.GigEntity
+import giigle.backend.core.repository.BaseRepository
+import giigle.backend.modules.gig.entity.GigEntity
 import org.springframework.data.jpa.repository.EntityGraph
 import java.util.Optional
 

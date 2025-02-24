@@ -1,6 +1,6 @@
-package giggle.backend.modules.gig.entity
+package giigle.backend.modules.gig.entity
 
-import giggle.backend.core.entity.BaseEntity
+import giigle.backend.core.entity.BaseEntity
 import jakarta.persistence.Entity
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.MapsId

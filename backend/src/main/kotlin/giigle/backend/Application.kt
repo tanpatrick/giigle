@@ -1,4 +1,4 @@
-package giggle.backend
+package giigle.backend
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.event.ApplicationStartingEvent

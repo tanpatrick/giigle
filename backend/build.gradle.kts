@@ -52,6 +52,9 @@ kotlin {
 }
 
 openApiGenerate {
+    apiPackage.set("giigle.generated.api")
+    modelPackage.set("giigle.generated.model")
+
     configOptions.set(
         mapOf(
             "annotationLibrary" to "swagger2",
@@ -70,9 +73,6 @@ openApiGenerate {
     )
     generatorName.set("spring")
     inputSpec.set("$rootDir/api_specs/api.yaml")
-    packageName.set("giggle.generated")
-    apiPackage.set("giggle.generate.api")
-    modelPackage.set("giggle.generate.model")
     outputDir.set("${layout.buildDirectory.get()}/generated")
 }
 

@@ -1,10 +1,10 @@
-package giggle.backend.modules.gig.controller
+package giigle.backend.modules.gig.controller
 
-import giggle.backend.modules.gig.service.GigService
-import giggle.generate.api.GigApi
-import giggle.generate.model.CreateGigRequest
-import giggle.generate.model.Gig
-import giggle.generate.model.GigResponse
+import giigle.backend.modules.gig.service.GigService
+import giigle.generated.api.GigApi
+import giigle.generated.model.CreateGigRequest
+import giigle.generated.model.Gig
+import giigle.generated.model.GigResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 
