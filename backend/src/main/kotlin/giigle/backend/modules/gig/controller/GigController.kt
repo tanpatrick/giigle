@@ -16,7 +16,7 @@ class GigController(
 
     override fun deleteGigById(id: String): ResponseEntity<Void> {
         service.delete(id)
-        return ResponseEntity.notFound().build()
+        return ResponseEntity.noContent().build()
     }
 
     override fun getGigById(id: String): ResponseEntity<Gig> = ResponseEntity.ok(service.findById(id))

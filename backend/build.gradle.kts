@@ -22,6 +22,11 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    // mapper
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    kapt("org.mapstruct:mapstruct-processor:1.6.3")
+
     // database
     implementation("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -30,8 +35,13 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // testing
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
+    testImplementation("io.mockk:mockk:1.13.16")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "mockito-core")
+    }
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -80,6 +90,7 @@ plugins {
     val kotlinVersion = "1.9.25"
 
     kotlin("jvm") version kotlinVersion
+    kotlin("kapt") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
 
@@ -121,4 +132,15 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+task("printMapStructProperties") {
+    doLast {
+        val propertiesFile = file("src/main/resources/mapstruct.properties")
+        if (propertiesFile.exists()) {
+            println("mapstruct.properties found: ${propertiesFile.readText()}")
+        } else {
+            println("mapstruct.properties not found.")
+        }
+    }
 }
