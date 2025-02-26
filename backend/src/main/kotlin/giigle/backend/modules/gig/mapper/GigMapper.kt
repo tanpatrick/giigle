@@ -11,8 +11,18 @@ import org.mapstruct.Mapping
     componentModel = "spring",
 )
 interface GigMapper {
-    @Mapping(source = "location.latitude", target = "location.coordinates.latitude")
-    @Mapping(source = "location.longitude", target = "location.coordinates.longitude")
+    @Mapping(source = "location.coordinates.latitude", target = "location.latitude")
+    @Mapping(source = "location.coordinates.longitude", target = "location.longitude")
+    @Mapping(target = "location.createdAt", ignore = true)
+    @Mapping(target = "location.gig", ignore = true)
+    @Mapping(target = "location.id", ignore = true)
+    @Mapping(target = "location.modifiedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "modifiedAt", ignore = true)
+    fun fromGig(gig: Gig): GigEntity
+
+    @InheritInverseConfiguration(name = "fromGig")
     fun toGig(entity: GigEntity): Gig
 
     @Mapping(target = "location.createdAt", ignore = true)
@@ -24,15 +34,5 @@ interface GigMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "modifiedAt", ignore = true)
-    fun toEntity(request: CreateGigRequest): GigEntity
-
-    @InheritInverseConfiguration(name = "toGig")
-    @Mapping(target = "location.createdAt", ignore = true)
-    @Mapping(target = "location.gig", ignore = true)
-    @Mapping(target = "location.id", ignore = true)
-    @Mapping(target = "location.modifiedAt", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
-    fun fromGig(gig: Gig): GigEntity
+    fun toGigEntity(request: CreateGigRequest): GigEntity
 }

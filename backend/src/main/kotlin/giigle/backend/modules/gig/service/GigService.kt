@@ -16,7 +16,7 @@ class GigService(
     private val repository: GigRepository,
 ) : CrudService<CreateGigRequest, Gig, GigResponse> {
     override fun create(request: CreateGigRequest): Gig {
-        val entity = mapper.toEntity(request)
+        val entity = mapper.toGigEntity(request)
         val savedEntity = repository.save(entity)
         return mapper.toGig(savedEntity)
     }
