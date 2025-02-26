@@ -5,6 +5,7 @@ on:
       - main
     paths-ignore:
       - "frontend/**"
+      - "*.md"
 jobs:
   deploy:
     name: Deploy app
@@ -45,6 +46,12 @@ jobs:
         with:
           name: kover-coverage-report
           path: backend/build/reports/kover/html
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: backend/build/reports/kover/report.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
         name: Set up flyctl
