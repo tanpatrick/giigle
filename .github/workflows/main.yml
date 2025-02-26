@@ -24,11 +24,27 @@ jobs:
         with:
           java-version: '21'
           distribution: 'corretto'
+      
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build & Test
         run: |
           cd backend
           ./gradlew clean build
+
+      - name: Upload Kover HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: kover-coverage-report
+          path: backend/build/reports/kover/html
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
         name: Set up flyctl

@@ -96,6 +96,7 @@ plugins {
 
     id("com.diffplug.spotless") version "7.0.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.jetbrains.kotlinx.kover") version "0.9.1"
     id("org.openapi.generator") version "7.10.0"
     id("org.springframework.boot") version "3.4.3"
 }
@@ -132,15 +133,5 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-task("printMapStructProperties") {
-    doLast {
-        val propertiesFile = file("src/main/resources/mapstruct.properties")
-        if (propertiesFile.exists()) {
-            println("mapstruct.properties found: ${propertiesFile.readText()}")
-        } else {
-            println("mapstruct.properties not found.")
-        }
-    }
+    finalizedBy("koverHtmlReport", "koverXmlReport")
 }
