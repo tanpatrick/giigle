@@ -25,10 +25,10 @@ jobs:
           java-version: '21'
           distribution: 'corretto'
 
-      - name: Build
+      - name: Build & Test
         run: |
           cd backend
-          ./gradlew clean build -x test
+          ./gradlew clean build
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
         name: Set up flyctl
