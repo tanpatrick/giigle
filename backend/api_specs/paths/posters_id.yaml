@@ -1,0 +1,37 @@
+get:
+  operationId: getPosterById
+  summary: Get a poster by ID
+  tags:
+    - Poster
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Poster details
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/posters/Poster.yaml'
+    '404':
+      description: Poster not found
+
+delete:
+  operationId: deletePosterById
+  summary: Delete a poster by ID
+  tags:
+    - Poster
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: Poster successfully deleted
+    '404':
+      description: Poster not found

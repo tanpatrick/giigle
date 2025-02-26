@@ -1,0 +1,12 @@
+type: object
+required:
+  - id
+  - name
+  - username
+properties:
+  id:
+    type: string
+  name:
+    type: string
+  username:
+    type: string

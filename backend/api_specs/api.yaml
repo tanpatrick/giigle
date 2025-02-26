@@ -77,6 +77,11 @@ paths:
       tags:
         - Gig
 
+  /posters:
+    $ref: './paths/posters_index.yaml'
+  /posters/{id}:
+    $ref: './paths/posters_id.yaml'
+
 components:
   schemas:
     CreateGigRequest:

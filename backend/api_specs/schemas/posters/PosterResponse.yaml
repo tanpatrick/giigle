@@ -1,0 +1,8 @@
+type: object
+required:
+  - posters
+properties:
+  posters:
+    type: array
+    items:
+      $ref: './Poster.yaml'
