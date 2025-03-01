@@ -14,9 +14,9 @@ class GigService(
     private val repository: GigRepository,
 ) : CrudService<CreateGigRequest, Gig, GigResponse> {
     override fun create(request: CreateGigRequest): Gig {
-        val entity = mapper.toGigEntity(request)
+        val entity = mapper.createModelToEntity(request)
         val savedEntity = repository.save(entity)
-        return mapper.toGig(savedEntity)
+        return mapper.entityToModel(savedEntity)
     }
 
     override fun delete(id: String) {
@@ -27,15 +27,14 @@ class GigService(
         val gigs =
             repository
                 .findAll()
-                .map(mapper::toGig)
+                .map(mapper::entityToModel)
 
-        return GigResponse()
-            .gigs(gigs)
+        return GigResponse(gigs)
     }
 
     override fun findById(id: String): Gig =
         repository
             .findById(id)
-            .map(mapper::toGig)
+            .map(mapper::entityToModel)
             .orElseThrow()
 }

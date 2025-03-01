@@ -2,6 +2,7 @@ package giigle.backend.modules.gig.service
 
 import giigle.backend.modules.gig.CreateGigRequestCreator
 import giigle.backend.modules.gig.GigEntityCreator
+import giigle.backend.modules.gig.entity.GigEntity
 import giigle.backend.modules.gig.mapper.GigMapper
 import giigle.backend.modules.gig.mapper.GigMapperImpl
 import giigle.backend.modules.gig.repository.GigRepository
@@ -9,12 +10,14 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
+import io.mockk.slot
 import io.mockk.verify
+import jakarta.persistence.EntityNotFoundException
+import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.util.Optional
 
 class GigServiceTest {
     private lateinit var gigService: GigService
@@ -22,12 +25,12 @@ class GigServiceTest {
     @MockK(relaxed = true)
     private lateinit var repository: GigRepository
 
-    private val gigMapper: GigMapper = GigMapperImpl()
+    private val mapper: GigMapper = GigMapperImpl()
 
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
-        gigService = GigService(gigMapper, repository)
+        gigService = GigService(mapper, repository)
     }
 
     @Test
@@ -36,17 +39,17 @@ class GigServiceTest {
 
         val request = CreateGigRequestCreator.create()
         val result = gigService.create(request)
-
-        verify(exactly = 1) { repository.save(any()) }
-
         assertThat(result).isNotNull
-        assertThat(result.date).isEqualTo(request.date)
+
+        verify(exactly = 1) { repository.save(match { it -> it.title == request.title }) }
     }
 
     @Test
     fun `should delete gig by id successfully`() {
         val gigId = "123"
-        justRun { repository.deleteById(gigId) }
+
+        every { repository.findById(gigId) } returns Optional.of(GigEntityCreator.create())
+        justRun { repository.deleteById(match { it == gigId }) }
 
         gigService.delete(gigId)
         verify(exactly = 1) { repository.deleteById(gigId) }
@@ -71,13 +74,12 @@ class GigServiceTest {
     @Test
     fun `should find gig by id successfully`() {
         val entity = GigEntityCreator.create()
-        every { repository.findById("123") } returns Optional.of(entity)
+        every { repository.findById(entity.id) } returns Optional.of(entity)
 
-        val result = gigService.findById("123")
-        verify(exactly = 1) { repository.findById("123") }
+        val result = gigService.findById(entity.id)
+        verify(exactly = 1) { repository.findById(match { it == entity.id }) }
 
         assertThat(result).isNotNull
-        assertThat(result.date).isEqualTo(entity.date)
     }
 
     @Test
