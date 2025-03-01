@@ -6,12 +6,10 @@ import giigle.backend.modules.gig.repository.GigRepository
 import giigle.generated.model.CreateGigRequest
 import giigle.generated.model.Gig
 import giigle.generated.model.GigResponse
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
 @Service
 class GigService(
-    @Qualifier("gigMapper")
     private val mapper: GigMapper,
     private val repository: GigRepository,
 ) : CrudService<CreateGigRequest, Gig, GigResponse> {
