@@ -3,9 +3,8 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "frontend/**"
-      - "*.md"
+    paths:
+      - backend/**
 jobs:
   deploy:
     name: Deploy app
