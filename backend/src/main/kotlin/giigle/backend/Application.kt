@@ -12,6 +12,7 @@ import java.time.ZoneId
 import java.util.TimeZone
 
 @SpringBootApplication
+@EnableJpaAuditingForNonTest
 class Application
 
 fun main(args: Array<String>) {
