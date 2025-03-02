@@ -2,7 +2,6 @@ package giigle.backend.modules.gig.service
 
 import giigle.backend.modules.gig.CreateGigRequestCreator
 import giigle.backend.modules.gig.GigEntityCreator
-import giigle.backend.modules.gig.entity.GigEntity
 import giigle.backend.modules.gig.mapper.GigMapper
 import giigle.backend.modules.gig.mapper.GigMapperImpl
 import giigle.backend.modules.gig.repository.GigRepository
@@ -10,14 +9,12 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
-import io.mockk.slot
 import io.mockk.verify
-import jakarta.persistence.EntityNotFoundException
-import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.util.Optional
 
 class GigServiceTest {
     private lateinit var gigService: GigService

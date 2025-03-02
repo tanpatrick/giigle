@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional
 )
 @Transactional
 class GigServiceIntegrationTest {
-
     @Autowired
     private lateinit var repository: GigRepository
 
@@ -27,8 +26,10 @@ class GigServiceIntegrationTest {
         val gig = service.create(CreateGigRequestCreator.create())
         assertThat(gig).isNotNull
 
-        val entity = repository.findById(gig.id)
-            .get()
+        val entity =
+            repository
+                .findById(gig.id)
+                .get()
 
         assertThat(entity.date).isEqualTo(gig.date)
         assertThat(entity.description).isEqualTo(gig.description)
