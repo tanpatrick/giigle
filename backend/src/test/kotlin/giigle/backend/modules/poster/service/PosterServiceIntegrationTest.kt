@@ -3,23 +3,27 @@ package giigle.backend.modules.poster.service
 import giigle.backend.modules.poster.CreatePosterRequestCreator
 import giigle.backend.modules.poster.repository.PosterRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.transaction.annotation.Transactional
 
 @ActiveProfiles("integration")
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.NONE,
 )
-@Transactional
 class PosterServiceIntegrationTest {
     @Autowired
     private lateinit var repository: PosterRepository
 
     @Autowired
     private lateinit var service: PosterService
+
+    @BeforeEach
+    fun cleanUp() {
+        repository.deleteAll()
+    }
 
     @Test
     fun `should create a poster successfully`() {
