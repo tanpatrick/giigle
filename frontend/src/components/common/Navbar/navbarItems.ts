@@ -7,6 +7,7 @@ export const navbarItems: NavbarItemProps[] = [
   },
   {
     href: "/gigs/new",
+    isAuthenticated: true,
     label: "Got a Gig? Post It Here!",
   },
 ];

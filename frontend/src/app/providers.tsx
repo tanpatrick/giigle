@@ -1,13 +1,16 @@
 "use client";
 
+import { Auth0Provider } from "@auth0/nextjs-auth0";
 import { HeroUIProvider } from "@heroui/react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <HeroUIProvider locale="en-GB">
-      <MapProvider>{children}</MapProvider>
-    </HeroUIProvider>
+    <Auth0Provider>
+      <HeroUIProvider locale="en-GB">
+        <MapProvider>{children}</MapProvider>
+      </HeroUIProvider>
+    </Auth0Provider>
   );
 }
 

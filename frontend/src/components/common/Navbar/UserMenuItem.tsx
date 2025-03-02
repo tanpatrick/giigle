@@ -1,9 +1,29 @@
 "use client";
 
+import { BiLogIn } from "react-icons/bi";
+import { useUser } from "@auth0/nextjs-auth0";
 import { Avatar } from "@heroui/avatar";
+import { Button } from "@heroui/button";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from "@heroui/dropdown";
 
 export function UserMenuItem() {
+  const { user } = useUser();
+
+  if (!user?.email) {
+    return (
+      <Button
+        color="primary"
+        variant="solid"
+        endContent={<BiLogIn />}
+        onPress={() => {
+          window.location.href = "/auth/login";
+        }}
+      >
+        Login
+      </Button>
+    );
+  }
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -12,7 +32,7 @@ export function UserMenuItem() {
           className="transition-transform"
           color="secondary"
           isBordered
-          name="Jason Hughes"
+          name={user?.nickname}
           size="sm"
           src="https://api.dicebear.com/9.x/bottts/svg"
         />
@@ -34,9 +54,24 @@ export function UserMenuItem() {
         }}
       >
         <DropdownSection showDivider aria-label="Preferences">
-          <DropdownItem key="quick_search" shortcut="⌘K">
-            Quick search
+          <DropdownItem key="profile" className="h-14 gap-2">
+            <div className="flex">
+              <div className="flex-none">
+                <Avatar
+                  as="button"
+                  className="transition-transform"
+                  color="secondary"
+                  isBordered
+                  name={user.nickname}
+                  size="sm"
+                  src="https://api.dicebear.com/9.x/bottts/svg"
+                />
+              </div>
+
+              <p className="flex-1 ml-5 font-semibold self-center">{user?.nickname}</p>
+            </div>
           </DropdownItem>
+
           <DropdownItem
             key="theme"
             isReadOnly
@@ -59,7 +94,11 @@ export function UserMenuItem() {
 
         <DropdownSection aria-label="Help & Feedback">
           <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-          <DropdownItem key="logout">Log Out</DropdownItem>
+          <DropdownItem key="logout">
+            <a className="block w-full" href="/auth/logout">
+              Log out
+            </a>
+          </DropdownItem>
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
