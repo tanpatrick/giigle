@@ -6,6 +6,6 @@ import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.data.repository.PagingAndSortingRepository
 
 @NoRepositoryBean
-interface BaseRepository<T : BaseEntity> :
-    ListCrudRepository<T, String>,
-    PagingAndSortingRepository<T, String>
+interface BaseRepository<Entity : BaseEntity> :
+    ListCrudRepository<Entity, String>,
+    PagingAndSortingRepository<Entity, String>
